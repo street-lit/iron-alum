@@ -18,7 +18,7 @@ course = %w(Frontend Backend Design)
     location_id: location.id
     })
   Student.create({
-    cohort_id: cohort.id
+    cohort_id: cohort.id,
     name: Faker::Name.name
     })
 end
