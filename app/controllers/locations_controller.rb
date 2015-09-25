@@ -10,7 +10,7 @@ class LocationsController < ApplicationController
       location = Location.find(params[:id])
       render json: location.to_json, status: 200
     else
-      render json: { error_message: "The record id: #{params[:id]} not found!" }.to_json, status: 404
+      render json: { error_message: "Error 404: Page Not Found" }.to_json, status: 404
     end
   end
 
@@ -43,7 +43,7 @@ class LocationsController < ApplicationController
       location.save
       render json: location.to_json, status: 200
     else
-      render json: { error_message: "The record id: #{params[:id]} not found!" }.to_json, status: 404
+      render json: { error_message: "Error 404: Page Not Found" }.to_json, status: 404
     end
   end
 
@@ -53,17 +53,31 @@ class LocationsController < ApplicationController
       location.destroy
       render json: { message: "Location with id: #{params[:id]} deleted successfully." }.to_json, status: 200
     else
-      render json: { error_message: "Location id: #{params[:id]} not found!" }.to_json, status: 404
+      render json: { error_message: "Error 404: Page Not Found" }.to_json, status: 404
     end
   end
 
   def by_cohort
-    # if Location.exists?(params[:city])
-      cohort_by_location = Location.where(city: "#{params[:city]}").first.cohorts.where(course_name: "#{params[:course_name]}").first.students
+    if Location.exists?(Location.where(city: params[:city]).first)
+      cohort_by_location = Location.find_by(city: "#{params[:city]}").cohorts.find_by(course_name: "#{params[:course_name]}").students
       render json: cohort_by_location.to_json, status: 200
-    # else
-    #   render json: { error_message: "Location id: #{params[:id]} not found!" }.to_json, status: 404
-    # end
+    else
+      render json: { error_message: "Error 404: Page Not Found" }.to_json, status: 404
+    end
+  end
+
+  def by_student_by_cohort # Add Error Page!!!!
+    if Location.exists?(Location.where(city: params[:city]).first)
+      student_by_cohort = Location.find_by(city: "#{params[:city]}").cohorts.find_by(course_name: "#{params[:course_name]}").students.find_by(id: "#{params[:id]}")
+      render json: student_by_cohort.to_json, status: 200
+    end
+  end
+
+  def students_by_city
+    if Location.exists?(Location.where(city: params[:city]).first)
+      students = Location.find_by(city: "#{params[:city]}").students
+      render json: students.to_json, status: 200
+    end
   end
 end
 

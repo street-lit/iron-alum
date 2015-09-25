@@ -3,7 +3,10 @@ Rails.application.routes.draw do
   resources :cohorts
   resources :locations
 
+  get "/:city/students", to: "locations#students_by_city"
   get "/:city/:course_name", to: "locations#by_cohort"
+  get "/:city/:course_name/:id", to: "locations#by_student_by_cohort"
+
 
   root "locations#index"
 
