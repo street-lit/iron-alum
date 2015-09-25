@@ -5,13 +5,13 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
-city = %w(Austin Dallas Houston Atlanta)
+city = %w(Austin Dallas Houston)
 course = %w(Frontend Backend Design)
 
 30.times do
   location = Location.create({
     city: city.sample,
-    state: Faker::Address.state_abbr
+    state: "TX"
     })
   cohort = Cohort.create({
     name: course.sample,

@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
   resources :students
   resources :cohorts
-  get '/bananas', to:'locations#index'
+  resources :locations
+
+  match '*not_found_route', to: 'application#not_found', via: [:get, :post, :put, :delete]
 end
