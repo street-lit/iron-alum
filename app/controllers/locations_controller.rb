@@ -57,9 +57,38 @@ class LocationsController < ApplicationController
     end
   end
 
-  # def by_cohort
-  #   if Location.exists?(params[:city])
-  #     cohort_by_location = Location.joins()
-  #   end
-  # end
+  def by_cohort
+    # if Location.exists?(params[:city])
+      cohort_by_location = Location.where(city: "#{params[:city]}").first.cohorts.where(course_name: "#{params[:course_name]}").first.students
+      render json: cohort_by_location.to_json, status: 200
+    # else
+    #   render json: { error_message: "Location id: #{params[:id]} not found!" }.to_json, status: 404
+    # end
+  end
 end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
