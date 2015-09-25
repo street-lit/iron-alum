@@ -48,6 +48,12 @@ class CohortsController < ApplicationController
   end
 
   def destroy
-
+    if Cohort.exists?(params[:id])
+      cohort = Cohort.find(params[:id])
+      cohort.destroy
+      render json: { message: "Cohort with id: #{params[:id]} deleted successfully." }.to_json, status: 200
+    else
+      render json: { error_message: "Cohort id: #{params[:id]} not found!" }.to_json, status: 404
+    end
   end
 end

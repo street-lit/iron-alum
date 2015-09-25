@@ -17,8 +17,10 @@ ActiveRecord::Schema.define(version: 20150924215512) do
   enable_extension "plpgsql"
 
   create_table "cohorts", force: :cascade do |t|
-    t.string   "name",        null: false
+    t.string   "course_name", null: false
     t.integer  "location_id"
+    t.date     "start_date",  null: false
+    t.date     "end_date",    null: false
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
@@ -33,14 +35,24 @@ ActiveRecord::Schema.define(version: 20150924215512) do
   end
 
   create_table "students", force: :cascade do |t|
-    t.string   "name",       null: false
+    t.string   "f_name",                         null: false
+    t.string   "l_name",                         null: false
+    t.string   "email",                          null: false
+    t.text     "bio",                            null: false
+    t.string   "linked_in",                      null: false
+    t.string   "github",                         null: false
+    t.boolean  "employed",       default: false, null: false
+    t.string   "place_employed"
     t.integer  "cohort_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.integer  "location_id"
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
   end
 
   add_index "students", ["cohort_id"], name: "index_students_on_cohort_id", using: :btree
+  add_index "students", ["location_id"], name: "index_students_on_location_id", using: :btree
 
   add_foreign_key "cohorts", "locations"
   add_foreign_key "students", "cohorts"
+  add_foreign_key "students", "locations"
 end

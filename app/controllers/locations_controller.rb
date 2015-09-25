@@ -48,6 +48,18 @@ class LocationsController < ApplicationController
   end
 
   def destroy
-
+    if Location.exists?(params[:id])
+      location = Location.find(params[:id])
+      location.destroy
+      render json: { message: "Location with id: #{params[:id]} deleted successfully." }.to_json, status: 200
+    else
+      render json: { error_message: "Location id: #{params[:id]} not found!" }.to_json, status: 404
+    end
   end
+
+  # def by_cohort
+  #   if Location.exists?(params[:city])
+  #     cohort_by_location = Location.joins()
+  #   end
+  # end
 end

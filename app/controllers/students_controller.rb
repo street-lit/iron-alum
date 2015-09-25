@@ -48,6 +48,12 @@ class StudentsController < ApplicationController
   end
 
   def destroy
-
+    if Student.exists?(params[:id])
+      student = Student.find(params[:id])
+      student.destroy
+      render json: { message: "Student with id: #{params[:id]} deleted successfully." }.to_json, status: 200
+    else
+      render json: { error_message: "Student id: #{params[:id]} not found!" }.to_json, status: 404
+    end
   end
 end
