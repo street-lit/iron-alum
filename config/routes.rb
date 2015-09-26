@@ -7,7 +7,6 @@ Rails.application.routes.draw do
   get "/:city/:course_name", to: "locations#by_cohort"
   get "/:city/:course_name/:id", to: "locations#by_student_by_cohort"
 
-
   root "locations#index"
 
   match '*not_found_route', to: 'application#not_found', via: [:get, :post, :put, :delete]

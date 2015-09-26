@@ -20,8 +20,9 @@ class StudentsController < ApplicationController
   end
 
   def create
+
     if params[:f_name].nil? || params[:f_name].empty?
-      error_message = "The 'f_name' field was empty or not found"
+      error_message = "The 'first name' field was empty or not found"
       render json: { error_message: error_message }.to_json, status: 422
     elsif params[:l_name].nil? || params[:l_name].empty?
       error_message = "The 'l_name' field was empty or not found"
