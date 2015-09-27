@@ -20,30 +20,25 @@ class LocationsController < ApplicationController
   end
 
   def create
-    if params[:city].nil? || params[:city].empty?
-      error_message = "The 'city' field was empty or not found"
-      render json: { error_message: error_message }.to_json, status: 422
-    elsif params[:state].nil? || params[:state].empty?
-      error_message = "The 'state' field was empty or not found"
-      render json: { error_message: error_message }.to_json, status: 422
+    location = Location.new
+    location.city = params.fetch(:city)
+    location.state = params.fetch(:state)
+    if location.save
+      render json: location.to_json, status: 201
     else
-      location = Location.new
-      location.city = params[:city]
-      location.state = params[:state]
-      location.save
-      render json: cohort.to_json, status: 201
+      error_message = "The location was not completely filled out or not able to be created"
+      render json: { error_message: error_message }.to_json, status: 422
     end
   end
 
   def update
-    if Location.exists?(params[:id])
-      location = Location.find(params[:id])
-      location.city = params[:city] unless params[:city].nil? || params[:city].empty?
-      location.state = params[:state] unless params[:state].nil? || params[:state].empty?
-      location.save
+    location = Location.find(params[:id])
+    location.city = params.fetch(:city, location.city)
+    location.state = params.fetch(:state, location.state)
+    if location.save
       render json: location.to_json, status: 200
     else
-      render json: { error_message: "Error 404: Page Not Found" }.to_json, status: 404
+      render json: { error_message: "Error 404: Page Not Updated #{location.errors.messages}!" }.to_json, status: 404
     end
   end
 
@@ -51,7 +46,7 @@ class LocationsController < ApplicationController
     if Location.exists?(params[:id])
       location = Location.find(params[:id])
       location.destroy
-      render json: { message: "Location with id: #{params[:id]} deleted successfully." }.to_json, status: 200
+      render json: { message: "Location deleted successfully." }.to_json, status: 200
     else
       render json: { error_message: "Error 404: Page Not Found" }.to_json, status: 404
     end
