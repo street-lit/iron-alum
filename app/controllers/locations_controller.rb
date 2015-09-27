@@ -61,10 +61,12 @@ class LocationsController < ApplicationController
     end
   end
 
-  def by_student_by_cohort # Add Error Page!!!!
+  def by_student_by_cohort
     if Location.exists?(Location.where(city: params[:city]).first)
       student_by_cohort = Location.find_by(city: "#{params[:city]}").cohorts.find_by(course_name: "#{params[:course_name]}").students.find_by(id: "#{params[:id]}")
       render json: student_by_cohort.to_json, status: 200
+    else
+      render json: { error_message: "Error 404: Page Not Found" }.to_json, status: 404
     end
   end
 
