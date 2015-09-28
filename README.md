@@ -4,6 +4,7 @@
 * [RESTful URLs](#restful-urls)
 * [Using Iron Alum API](#using-iron-alum-api)
 * [JSON Parameters](#json-parameters)
+* [Example Tables](#example-tables)
 
 ## Guidelines
 This README will describe how to interact with the Iron Alum API. 
