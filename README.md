@@ -31,29 +31,59 @@ This document borrows heavily from:
 ## Using Iron Alum API
 In order to use the Iron Alum API, the user must make the approiate request with the correct RESTful url. When the word '`:resource`' is used, it refers to either '`students`', '`cohorts` or '`locations` and can be substitued with the respective resource.
 
-###  Accessing All Iron Yard Students, Cohorts or Locations:
+###  Accessing All Iron Yard students, cohorts or locations:
 
-* `GET` request to `http://iron-alum.herokuapp.com/:resource` will display JSON of all the records currently held in the database for that respective `:resource`. For example: `http://iron-alum.herokuapp.com/locations` will return all the different location JSON objects.
+* `GET` request to `http://iron-alum.herokuapp.com/:resource` will display JSON of all the records currently held in the database for that respective `:resource`. 
 
-###  Accessing a specific Iron Yard Student, Cohort or Location:
+- For example: http://iron-alum.herokuapp.com/locations will return all the different location JSON objects within an array with the following parameters:
 
-* `GET` request to `http://iron-alum.herokuapp.com/:resource/:id` will show a specific record with the respective id number, shoud that record exist. If you choose an `:id` that doesn't exist in the database, it will render an error. For example: `http://iron-alum.herokuapp.com/locations/1` will return the Austin location JSON object.
+```
 
-###  Accessing All Iron Yard Students by location and course:
+	city: string
+	state: string
+	created_at: timestamp
+	updated_at: timestamp
+	
+```
 
-* `GET` request to `http://iron-alum.herokuapp.com/:locations/:course_name/` accesses all students within a specific cohort relative to its location where `:course_name` is an attribute of the `:cohort` resource/object. If you choose an `:location` or `:course_name` that doesn't exist in the database, it will render an error.
+###  Accessing a specific Iron Yard student, cohort or location:
 
-###  Accessing a specific Iron Yard Student by location and course:
+* Send a `GET` request to `http://iron-alum.herokuapp.com/:resource/:id` will show a specific record with the respective id number, shoud that record exist. If you choose an `:id` that doesn't exist in the database, it will render an error. 
 
-* `GET` request to `http://iron-alum.herokuapp.com/:locations/:course_name/:id` accesses a specific student within a specific cohort relative to its location where `:course_name` is an attribute of the `:cohort` resource/object and `:id` being the students unique identifier. If you choose an `:location`, `:course_name` or `:id` that doesn't exist in the database, it will render an error.
+- For example: http://iron-alum.herokuapp.com/students/1 will return the JSON format with the following format:
 
-###  Creating an Iron Yard Student, Cohort or Location:
+```
+	
+	f_name: string
+	l_name: string
+	email: string
+	bio: text
+	linked_in: string
+	github: string
+	employed: boolean
+	place_employed: string
+	cohort_id: int
+	location_id: int
+	created_at: timestamp
+	updated_at: timestamp
+	
+```
 
-* `POST`request to `http://iron-alum.herokuapp.com/:resource` allows you to create a new `student`, `cohort` or `location`. The value `nil` is not allowed for any parameters other than `place_employed:` for a Student JSON object. For the `POST` request, all parameters must contain a value and those values must match  their respective data type.
+###  Accessing All Iron Yard students by location and course:
 
-###  Updating an Iron Yard Student, Cohort or Location:
+* Send a `GET` request to `http://iron-alum.herokuapp.com/:locations/:course_name/` accesses all students within a specific cohort relative to its location where `:course_name` is an attribute of the `:cohort` resource/object. If you choose an `:location` or `:course_name` that doesn't exist in the database, it will render an error.
 
-* `PUT`request to `http://iron-alum.herokuapp.com/:resource/:id` allows you to update a `student`, `cohort` or `location`. The value `nil` is not allowed for any parameters other than `place_employed:` for a Student JSON object. For the `PUT` request, the parameter to be updated must contain a value and those values must match its respective data type.
+###  Accessing a specific Iron Yard student by location and course:
+
+* Send a `GET` request to `http://iron-alum.herokuapp.com/:locations/:course_name/:id` accesses a specific student within a specific cohort relative to its location where `:course_name` is an attribute of the `:cohort` resource/object and `:id` being the students unique identifier. If you choose an `:location`, `:course_name` or `:id` that doesn't exist in the database, it will render an error.
+
+###  Creating an Iron Yard student, cohort or location:
+
+* Send a `POST`request to `http://iron-alum.herokuapp.com/:resource` allows you to create a new `student`, `cohort` or `location`. The value `nil` is not allowed for any parameters other than `place_employed:` for a Student JSON object. For the `POST` request, all parameters must contain a value and those values must match  their respective data type.
+
+###  Updating an Iron Yard student, cohort or location:
+
+* Send a `PUT`request to `http://iron-alum.herokuapp.com/:resource/:id` allows you to update a `student`, `cohort` or `location`. The value `nil` is not allowed for any parameters other than `place_employed:` for a Student JSON object. For the `PUT` request, the parameter to be updated must contain a value and those values must match its respective data type.
 
 ## JSON Parameters
 
@@ -62,27 +92,30 @@ The parameters for each table are as follows:
 ```
 Student:
 	{
-	f_name: String
-	l_name: String
-	email: String
-	bio: Text
-	linked_in: String
-	github: String
-	employed: Boolean
-	place_employed: String ('nil' allowed)
+	f_name: string,
+	l_name: string,
+	email: string,
+	bio: text,
+	linked_in: string,
+	github: string,
+	employed: boolean,
+	place_employed: string, ('nil' allowed)
+	cohort_id: int,
+	location_id: int
 	}
 	
 	Cohort:
 	{
-	course_name: String
-	start_date: Date
-	end_date: Date
+	course_name: string,
+	start_date: date,
+	end_date: date,
+	location_id: int
 	}
 	
 	Location:
 	{
-	city: String
-	state: String
+	city: string,
+	state: string
 	}
 ```
 ## Example Tables
