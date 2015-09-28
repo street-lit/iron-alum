@@ -16,8 +16,11 @@ This document borrows heavily from:
 * [Ryan Yep's Find-A-Spot] (http://github.com/rcyep87/Find-A-Spot/blob/master/README.md)
 * [Matthew Giardina's Cat Chat] (https://github.com/mlgiardina/cat_chat)
 
+## User Stories
+Trello: [Iron Alum](http://trello.com/b/XWQoDM0K/iron-alum)
+
 ## UML
-![](http://i.imgur.com/tmEKPDx.png)
+![](http://i.imgur.com/tmEKPDx.png) 
 
 ## RESTful URLs
 
